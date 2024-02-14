@@ -36,7 +36,43 @@ def validate_user_input(message, max_len=0, options=None):
                 return user_input
         except ValueError:
             print("\033[1;91mPlease enter numbers only\033[00m")
-            
+
+
+def validate_number_range(message, min_val, max_val):
+    """
+    Validates user input to ensure it falls within a specified numeric range.
+
+    Parameters:
+    - message (str): The prompt message to display to the user.
+    - min_val (int): The minimum allowed value for the input.
+    - max_val (int): The maximum allowed value for the input.
+
+    Returns:
+    - int: The validated user input that falls within the specified range.
+
+    Notes:
+    - The function continues prompting the user until valid input is provided.
+    - It handles numeric input only.
+    - The input is checked against the specified minimum and maximum values.
+    - If the input value is less than `min_val`, an error message is displayed.
+    - If the input value is greater than `max_val`, an error message is displayed.
+    - If the input is not a valid number, an appropriate error message is displayed.
+    """
+    user_input=""
+    while True:
+        user_input = input(message)
+        try:
+            int(user_input)
+            if int(user_input)<min_val:
+                print(f"\033[1;91mThe number you entered is too small, your value should be greater than or equal to {min_val}\033[00m")
+            elif int(user_input)>max_val:
+                print(f"\033[1;91mThe number you entered is too big, your value should be less than or equal to {max_val}\033[00m")      
+            else:
+                return int(user_input)
+        except ValueError:
+            print("\033[1;91mPlease enter numbers only\033[00m")
+
+
 if __name__=="__main__":
     # id = validate_user_input("Please enter your id number: ", 10)
     # option = validate_user_input("Please enter one of the options: ",options=(1,2,3))
