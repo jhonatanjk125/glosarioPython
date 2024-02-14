@@ -78,3 +78,30 @@ def print_json(input_dictionary, indent=0):
                     print(f"{'  ' * indent}\033[1;97m#{index+1}\033[00m: {item}")
         else:
             print(f"{'  ' * indent}\033[1;97m{str(key).replace('_', ' ').capitalize()}\033[00m: {value}")
+
+
+def print_value_for_key(input_dictionary, target_key, current_key=None):
+    """
+    Prints the value associated with a specific key in a nested dictionary.
+
+    Parameters:
+    - input_dictionary (dict): The dictionary to search for the key.
+    - target_key (str): The key to search for.
+    - current_key (str): The current key being traversed. Defaults to None.
+
+    Returns:
+    - None
+    """
+    for key, value in input_dictionary.items():
+        if isinstance(value, dict):
+            # Recursively call this function if a dictionary is found where the key could be located
+            current_key = key if current_key is None else current_key
+            print_value_for_key(value, target_key, current_key)
+        elif isinstance(value, list):
+            # Loop through list items if a list is found
+            for item in value:
+                if isinstance(item, dict) or isinstance(item, list):
+                    # Recursively call this function if a dictionary is found inside the list
+                    print_value_for_key(item, target_key, current_key)
+        elif key == target_key:
+            print(f"\033[1;97m{str(key).replace('_', ' ').capitalize()}\033[00m: {value}")
