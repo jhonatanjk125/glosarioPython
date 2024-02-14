@@ -32,3 +32,19 @@ def save_data_to_file(json_filename, data_list=[]):
     """
     with open(f"data/{json_filename}.json", "w", encoding="utf-8") as f:
         json.dump(data_list, f, ensure_ascii=False, indent=4)
+
+
+def append_data_to_file(json_filename, data):
+    """
+    Appends data to a JSON file.
+
+    Parameters:
+    - json_filename (str): The name of the JSON file to append to (excluding the ".json" extension).
+    - data: The data to be appended to the file.
+
+    Returns:
+    - None
+    """
+    data_list = load_data_from_file(json_filename)
+    data_list.append(data)
+    save_data_to_file(json_filename, data_list)
